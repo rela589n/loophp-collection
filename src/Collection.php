@@ -63,11 +63,15 @@ final class Collection implements CollectionInterface, JsonSerializable, Countab
         return new self((new Operation\Apply())()(...$callbacks), [$this]);
     }
 
+
     public function associate(
         ?callable $callbackForKeys = null,
         ?callable $callbackForValues = null
     ): CollectionInterface {
         $defaultCallback = static fn (mixed $carry): mixed => $carry;
+
+        \PHPStan\dumpType($callbackForKeys);
+        \PHPStan\dumpType($callbackForValues);
 
         return new self((new Operation\Associate())()($callbackForKeys ?? $defaultCallback)($callbackForValues ?? $defaultCallback), [$this]);
     }

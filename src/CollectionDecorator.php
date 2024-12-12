@@ -53,7 +53,14 @@ abstract class CollectionDecorator implements CollectionInterface
         ?callable $callbackForKeys = null,
         ?callable $callbackForValues = null
     ): static {
-        return new static($this->innerCollection->associate($callbackForKeys, $callbackForValues));
+        \PHPStan\dumpType($callbackForKeys);
+        \PHPStan\dumpType($callbackForValues);
+
+        $resultCollection = $this->innerCollection->associate($callbackForKeys, $callbackForValues);
+
+        \PHPStan\dumpType($resultCollection);
+
+        return new static($resultCollection);
     }
 
     public function asyncMap(callable $callback): static

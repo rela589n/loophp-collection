@@ -20,10 +20,14 @@ interface Associateable
      * @template UKey
      * @template U
      *
-     * @param callable(TKey, T, iterable<TKey, T>): UKey $callbackForKeys
-     * @param callable(T, TKey, iterable<TKey, T>): U $callbackForValues
+     * @param ?callable(TKey, T, iterable<TKey, T>): UKey $callbackForKeys
+     * @param ?callable(T, TKey, iterable<TKey, T>): U $callbackForValues
      *
-     * @return Collection<UKey, U>
+     * @psalm-return (
+     *  $callbackForKeys is null
+     *  ? ($callbackForValues is null ? Collection<TKey, T> : Collection<TKey, U>)
+     *  : ($callbackForValues is null ? Collection<UKey, T> : Collection<UKey, U>)
+     * )
      */
     public function associate(?callable $callbackForKeys = null, ?callable $callbackForValues = null): Collection;
 }
